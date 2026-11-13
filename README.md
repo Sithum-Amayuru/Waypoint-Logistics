@@ -105,6 +105,7 @@ graph TD
     UI ==>|API Calls| API
     API --- AL
     API ==>|Read / Write| DB
+    
     ```
 
 The frontend is built into static files and served by the Express server, so the whole system runs as **one Docker container** (multi-stage Dockerfile). More details and diagrams are in the `docs/` folder.
