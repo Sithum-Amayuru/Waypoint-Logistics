@@ -68,13 +68,42 @@ Implemented in `backend/allocation.js` (`runAllocation`). Backend rules enforced
 
 ## Architecture
 
-```text
-React + Vite + Tailwind CSS (frontend, 4 role screens)
-      |  REST /api/...
-Express.js API (backend/index.js) + Allocation Logic (backend/allocation.js)
-      |
-SQLite (backend/waypoint.db, seeded from CSV datasets)
-```
+graph TD
+    subgraph External Users
+        SM(Store Manager)
+        DP(Dispatcher)
+        LD(Loader)
+        DR(Driver)
+    end
+
+    subgraph Azure Linux VM
+        subgraph Docker [Single Multi-stage Docker Container]
+            
+            subgraph Frontend [React + Vite + Tailwind CSS]
+                UI[Role-based Web Interfaces]
+            end
+            
+            subgraph Backend [Node.js + Express]
+                API[REST API Server]
+                AL[[Allocation Engine]]
+            end
+            
+            subgraph Data Layer
+                DB[(SQLite Database)]
+            end
+            
+        end
+    end
+
+    %% Connections
+    SM -.->|HTTP Requests| UI
+    DP -.->|HTTP Requests| UI
+    LD -.->|HTTP Requests| UI
+    DR -.->|Offline-first Sync| UI
+
+    UI ==>|API Calls| API
+    API --- AL
+    API ==>|Read / Write| DB
 
 The frontend is built into static files and served by the Express server, so the whole system runs as **one Docker container** (multi-stage Dockerfile). More details and diagrams are in the `docs/` folder.
 
@@ -83,19 +112,10 @@ The frontend is built into static files and served by the Express server, so the
 ```text
 backend/        Express API, allocation logic, CSV data, SQLite seeding
 frontend/       React + Vite + Tailwind app (pages per role)
-docs/           Architecture diagrams and data models
-ui-designs/     Screen captures from the Design phase
+docs/           Architecture diagram
 Dockerfile      Multi-stage build (frontend build + backend runtime)
 docker-compose.yml
 ```
-
-## UI/UX Role Specifics
-
-* **Dispatcher:** Features an Orders Assigned card, order filter tabs, and a Live Trips panel.
-* **Store Manager:** Features a real cart, an outlet selector, and a My Orders & Deliveries view with live status.
-* **Loader:** The truck and trip shown come from the allocation result, and only dispatcher-assigned orders appear.
-* **Driver:** Features offline queue and sync, and stops grouped by truck and trip.
-* **All roles:** Secure Logout functionality.
 
 ## Known Limitations
 
@@ -106,6 +126,3 @@ docker-compose.yml
 * No automated tests configured
 * The database lives inside the container, so a rebuild resets it to the initial seeded state
 
-## Figma Design
-
-[Interactive Figma Prototype](#) *(Note: Replace `#` with your actual Figma link)*
