@@ -2,10 +2,16 @@
 
 A full-stack logistics management platform for delivery planning and fleet allocation. It has smart vehicle routing, offline-first driver syncing, and a connected workflow for four roles. It is built to manage a shared delivery fleet across a multi-brand retail network (Fresh, Style, Tech).
 
+This is our first team project, built to learn web development.
+
 ## Live Deployment
 
-* **URL:** http://waypointlogistics.duckdns.org
-* Runs with Docker Compose (separate frontend and backend containers) on a Microsoft Azure Linux VM.
+* **URL:** https://waypoint-logistics-63e55.containers.snapdeploy.app/
+* Deployed as a Docker container on SnapDeploy.
+
+## Demo Video
+
+* **YouTube:** https://youtu.be/11eVEYJOyFE
 
 ## Demo Accounts (seeded)
 
@@ -77,6 +83,8 @@ The system runs in a Docker Compose environment:
 * **Database:** a file-based SQLite database used by the backend.
 * **Users:** Store Manager, Dispatcher, Loader and Driver use the web app over HTTPS. The frontend talks to the backend through the REST API.
 
+The diagram shows the Docker Compose setup used for local development. The live deployment runs as a single container built from the root `Dockerfile`.
+
 ## Repository Structure
 
 ```text
@@ -87,7 +95,7 @@ frontend/           React + Vite + Tailwind app (pages per role)
   nginx.conf        Nginx settings for serving the frontend
 docs/               Architecture diagram
 docker-compose.yml  Runs the frontend and backend together
-Dockerfile          Root Docker build file
+Dockerfile          Root Docker build file (used for the live deployment)
 .env                Environment settings (not committed)
 ```
 
@@ -98,4 +106,4 @@ Dockerfile          Root Docker build file
 * Sign-in uses fixed demo accounts (no real authentication)
 * The item catalogue uses demo weights and volumes
 * No automated tests are set up
-* The database lives inside the backend container, so a rebuild resets it to the starting seeded data
+* The database lives inside the container, so a rebuild resets it to the starting seeded data
