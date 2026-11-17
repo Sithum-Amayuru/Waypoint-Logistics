@@ -68,7 +68,7 @@ Implemented in `backend/allocation.js` (`runAllocation`). The backend enforces t
 
 ## Architecture
 
-![Waypoint Logistics System Architecture](docs/architecture.png)
+![Waypoint Logistics System Architecture](docs/architecture.jpeg)
 
 The system runs in a Docker Compose environment:
 
