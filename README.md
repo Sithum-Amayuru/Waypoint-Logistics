@@ -9,9 +9,6 @@ This is our first team project, built to learn web development.
 * **URL:** https://waypoint-logistics-63e55.containers.snapdeploy.app/
 * Deployed as a Docker container on SnapDeploy.
 
-## Demo Video
-
-* **YouTube:** https://youtu.be/11eVEYJOyFE
 
 ## Demo Accounts (seeded)
 
