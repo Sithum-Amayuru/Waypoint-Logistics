@@ -79,20 +79,20 @@ graph TD
 
     subgraph Azure Linux VM
         subgraph Docker [Single Multi-stage Docker Container]
-            
+
             subgraph Frontend [React + Vite + Tailwind CSS]
                 UI[Role-based Web Interfaces]
             end
-            
+
             subgraph Backend [Node.js + Express]
                 API[REST API Server]
                 AL[[Allocation Engine]]
             end
-            
-            subgraph Data Layer
+
+            subgraph DataLayer [Data Layer]
                 DB[(SQLite Database)]
             end
-            
+
         end
     end
 
@@ -105,8 +105,9 @@ graph TD
     UI ==>|API Calls| API
     API --- AL
     API ==>|Read / Write| DB
+```
 
-    ```bash
+The frontend is built into static files and served by the Express server, so the whole system runs from a single container.
 
 ## Repository Structure
 
